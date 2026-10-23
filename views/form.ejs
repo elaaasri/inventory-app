@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <div class="form-page">
+      <hr />
+      <form class="message-form" method="POST" action="/new">
+        <label for="username"> Author Name: </label>
+        <span class="error-msg"> <%= errors?.username?.msg || '' %> </span>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          value="<%= username  || "" %>"
+        />
+        <label for="message">Message:</label>
+        <span class="error-msg"> <%= errors?.message?.msg || "" %> </span>
+        <textarea id="message" name="message" type="text">
+        <%= message  || "" %> 
+        </textarea>
+        <button id="submit-button" type="submit">Submit</button>
+      </form>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>
