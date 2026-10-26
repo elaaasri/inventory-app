@@ -17,7 +17,7 @@ const SQL = `
       quantity INTEGER NOT NULL
   );
 
-  INSERT INTO products (name, price, category, quantity)
+  INSERT INTO products (name, price, category_id, quantity)
   VALUES ('bread', 5.5, 1, 10);
 `;
 
