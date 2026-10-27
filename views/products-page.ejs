@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include("./partials/head.ejs") %>
+  <%- include("./partials/head.ejs") %>
   <body>
     <h1>Products Page</h1>
+     <% products.forEach((p) => { %>
+      <div>
+        <span><%= p.name %></span>
+        <span><%= p.price %></span>
+        <span><%= p.quantity %></span>
+      </div>
+    <% }) %>
+    <a href="/products/create">+ Add Product</a>
   </body>
 </html>
