@@ -3,11 +3,12 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Products Page</h1>
-     <% products.forEach((p) => { %>
+     <% products.forEach((prod) => { %>
       <div>
-        <span><%= p.name %></span>
-        <span><%= p.price %></span>
-        <span><%= p.quantity %></span>
+        <span><%= prod.product_name %></span>
+        <span><%= prod.price %></span>
+        <span><%= prod.quantity %></span>
+        <span><%= prod.category_name %></span>
       </div>
     <% }) %>
     <a href="/products/create">+ Add Product</a>

@@ -2,7 +2,7 @@
 <html lang="en">
   <%- include("./partials/head.ejs") %>
   <body>
-    <h1>add product</h1>
+    <h1>Add Product</h1>
     <form action="/products/create" method="post">
       <label for="product-name">Name:</label>
       <input id="product-name" name="productName" type="text" />
@@ -13,11 +13,11 @@
       <label for="product-quantity">Quantity:</label>
       <input id="product-quantity" name="productQuantity" type="text" />
 
-      <label for="category-name">Category:</label>
-      <select id="category-name" name="categoryName">
-        <option value="fruits">fruits</option>
-        <option value="vegetables">vegetables</option>
-        <option value="meats">meats</option>
+      <label for="category-id">Category:</label>
+      <select id="category-id" name="categoryId">
+        <% categories.forEach((category) => { %>
+            <option value="<%= category.id %>"><%= category.category_name %></option>
+        <% }); %>
       </select>
 
       <button id="submit-button" type="submit">Submit</button>

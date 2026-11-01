@@ -3,15 +3,15 @@ import { Client } from "pg";
 const SQL = `
   CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      name VARCHAR(255) NOT NULL
+      category_name VARCHAR(100) NOT NULL
   );
 
-  INSERT INTO categories (name)
-  VALUES ('fruites'), ('vegetables'), ('meat'), ('seafood'), ('dairy'), ('grains'), ('bakery'), ('beverages');
+  INSERT INTO categories (category_name)
+  VALUES ('fruits'), ('vegetables'), ('meats'), ('seafood'), ('dairy'), ('grains'), ('bakery'), ('beverages');
 
   CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      name VARCHAR(255) NOT NULL,
+      product_name VARCHAR(100) NOT NULL,
       category_id INTEGER REFERENCES categories(id),
       price NUMERIC(10, 2) NOT NULL,
       quantity INTEGER NOT NULL
@@ -29,4 +29,5 @@ async function main() {
   await client.query(SQL);
   await client.end();
 }
+
 main();
