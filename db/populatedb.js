@@ -17,13 +17,13 @@ const SQL = `
       quantity INTEGER NOT NULL
   );
 
-  INSERT INTO products (name, price, category_id, quantity)
-  VALUES ('bread', 5.5, 1, 10);
+  INSERT INTO products (product_name, price, category_id, quantity)
+  VALUES ('banana', 5.5, 1, 10);
 `;
 
 async function main() {
   const client = new Client({
-    connectionString: process.env.DB_URL,
+    connectionString: process.env.LOCAL_DB_URL,
   });
   await client.connect();
   await client.query(SQL);

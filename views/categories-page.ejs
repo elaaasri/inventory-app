@@ -3,8 +3,8 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Categories Page</h1>
-    <% categories.forEach(({ category_name }) => { %>
-      <a href="categories/<%= category_name %>"><%= category_name %></a>
+    <% categories?.forEach(( { category_name } ) => { %>
+      <a href="/categories/<%= category_name %>"><%= category_name %></a>
     <% }) %>
   </body>
 </html>

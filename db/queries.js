@@ -11,25 +11,31 @@ async function fetchProducts() {
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id`);
+
   return rows;
 }
 
 async function addNewProduct(productData) {
-  const { productName, categoryId, productPrice, productQuantity } =
-    productData;
+  const { prodName, categoryId, prodPrice, prodQuantity } = productData;
 
   await pool.query(
     "INSERT INTO products (product_name, category_id, price, quantity) VALUES ($1, $2, $3, $4)",
-    [productName, categoryId, productPrice, productQuantity],
+    [prodName, categoryId, prodPrice, prodQuantity],
   );
 }
 
-export { fetchCategories, fetchProducts, addNewProduct };
+async function getProductsByCategory(category) {
+  const { rows } = await pool.query(
+    `
+    SELECT product_name, price, quantity, category_name 
+    FROM products 
+    JOIN categories 
+    ON products.category_id = categories.id 
+    AND category_name = $1`,
+    [category],
+  );
 
-// async function getCategoryIdByName(categoryName) {
-//   const { rows } = await pool.query(
-//     "SELECT id FROM categories WHERE category_name = $1",
-//     [categoryName],
-//   );
-//   return rows[0].id;
-// }
+  return rows;
+}
+
+export { fetchCategories, fetchProducts, addNewProduct, getProductsByCategory };

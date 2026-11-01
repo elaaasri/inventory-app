@@ -1,5 +1,9 @@
-import { fetchProducts, fetchCategories } from "../db/queries.js";
-import { addNewProduct } from "../db/queries.js";
+import {
+  fetchProducts,
+  fetchCategories,
+  addNewProduct,
+  getProductsByCategory,
+} from "../db/queries.js";
 
 async function getProductsPage(req, res) {
   try {
@@ -20,4 +24,15 @@ async function createProductPost(req, res) {
   res.redirect("/products");
 }
 
-export { getProductsPage, getFormPage, createProductPost };
+async function showProductsByCategory(req, res) {
+  const { category } = req.params;
+  const products = await getProductsByCategory(category);
+  res.render("products-page", { products });
+}
+
+export {
+  getProductsPage,
+  getFormPage,
+  createProductPost,
+  showProductsByCategory,
+};
