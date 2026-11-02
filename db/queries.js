@@ -24,6 +24,19 @@ async function addNewProduct(productData) {
   );
 }
 
+async function getProductsBySearch(searchValue) {
+  const { rows } = await pool.query(
+    `
+    SELECT product_name, price, quantity, category_name 
+    FROM products 
+    JOIN categories 
+    ON products.category_id = categories.id 
+    AND product_name = $1`,
+    [searchValue],
+  );
+  return rows;
+}
+
 async function getProductsByCategory(category) {
   const { rows } = await pool.query(
     `
@@ -38,4 +51,10 @@ async function getProductsByCategory(category) {
   return rows;
 }
 
-export { fetchCategories, fetchProducts, addNewProduct, getProductsByCategory };
+export {
+  fetchCategories,
+  fetchProducts,
+  addNewProduct,
+  getProductsBySearch,
+  getProductsByCategory,
+};

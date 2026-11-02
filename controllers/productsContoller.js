@@ -2,6 +2,7 @@ import {
   fetchProducts,
   fetchCategories,
   addNewProduct,
+  getProductsBySearch,
   getProductsByCategory,
 } from "../db/queries.js";
 
@@ -27,6 +28,12 @@ async function createProductPost(req, res) {
   res.redirect("/products");
 }
 
+async function searchProducts(req, res) {
+  const { searchValue } = req.query;
+  const products = await getProductsBySearch(searchValue);
+  res.render("search-page", { products });
+}
+
 async function showProductsByCategory(req, res) {
   const { category } = req.params;
   const products = await getProductsByCategory(category);
@@ -39,4 +46,5 @@ export {
   getFormPage,
   createProductPost,
   showProductsByCategory,
+  searchProducts,
 };
