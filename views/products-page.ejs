@@ -12,5 +12,15 @@
       </div>
     <% }) %>
     <a href="/products/create">+ Add Product</a>
+    
+    <div>
+      <h3>Filters:</h3>
+      <% categories?.forEach(( { category_name } ) => { %>
+        <div>
+          <a href="/products/<%= category_name %>"><%= category_name %></a>
+        </div>
+      <% }) %>
+    </div>
+    
   </body>
 </html>

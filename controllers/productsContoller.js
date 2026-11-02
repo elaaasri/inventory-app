@@ -8,7 +8,10 @@ import {
 async function getProductsPage(req, res) {
   try {
     const products = await fetchProducts();
-    res.render("products-page", { products });
+    const categories = await fetchCategories();
+    console.log("categories", categories);
+
+    res.render("products-page", { products, categories });
   } catch (err) {
     console.log(err);
   }
@@ -27,7 +30,8 @@ async function createProductPost(req, res) {
 async function showProductsByCategory(req, res) {
   const { category } = req.params;
   const products = await getProductsByCategory(category);
-  res.render("products-page", { products });
+  const categories = await fetchCategories();
+  res.render("products-page", { products, categories });
 }
 
 export {
