@@ -6,10 +6,13 @@
     <h3>Search page</h3>
     <% if (products.length > 0) { %>
       <% products?.forEach(( prod ) => { %>
-        <span><%= prod?.product_name %></span>
-        <span><%= prod?.price %></span>
-        <span><%= prod?.quantity %></span>
-        <span><%= prod?.category_name %></span>
+        <div>
+          <span><%= prod?.product_name %></span>
+          <span><%= prod?.price %></span>
+          <span><%= prod?.quantity %></span>
+          <span><%= prod?.category_name %></span>
+          <button class="remove-button" data-id="<%= prod?.id %>">remove</button>
+        </div>
       <% }) %>  
     <% } else { %>
         <span>No Products Found!</span>

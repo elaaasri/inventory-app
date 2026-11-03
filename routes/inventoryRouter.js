@@ -7,6 +7,7 @@ import {
   createProductPost,
   searchProducts,
   showProductsByCategory,
+  deleteProduct,
 } from "../controllers/productsContoller.js";
 
 const inventoryRouter = Router();
@@ -18,13 +19,18 @@ inventoryRouter.get("/products/create", getFormPage);
 inventoryRouter.post("/products/create", createProductPost);
 inventoryRouter.get("/products/search", searchProducts);
 inventoryRouter.get("/products/:category", showProductsByCategory);
+inventoryRouter.delete("/products/:id", deleteProduct);
 
 export { inventoryRouter };
 
 // filters products feature done
 // search bar feature done
-// edit product
 // delete product
+// edit product
+// add image and product page!
 // handle db errors
 // sanitaion
+// not found page
+// fix form types!
+// delete/edit access to admin only!
 // style;

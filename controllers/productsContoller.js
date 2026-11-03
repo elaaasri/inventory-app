@@ -4,13 +4,13 @@ import {
   addNewProduct,
   getProductsBySearch,
   getProductsByCategory,
+  deleteProductById,
 } from "../db/queries.js";
 
 async function getProductsPage(req, res) {
   try {
     const products = await fetchProducts();
     const categories = await fetchCategories();
-    console.log("categories", categories);
 
     res.render("products-page", { products, categories });
   } catch (err) {
@@ -40,6 +40,11 @@ async function showProductsByCategory(req, res) {
   const categories = await fetchCategories();
   res.render("products-page", { products, categories });
 }
+async function deleteProduct(req, res) {
+  const { id } = req.params;
+  await deleteProductById(id);
+  res.sendStatus(200);
+}
 
 export {
   getProductsPage,
@@ -47,4 +52,5 @@ export {
   createProductPost,
   showProductsByCategory,
   searchProducts,
+  deleteProduct,
 };

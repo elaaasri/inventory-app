@@ -7,7 +7,7 @@ async function fetchCategories() {
 
 async function fetchProducts() {
   const { rows } = await pool.query(`
-    SELECT product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, category_name 
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id`);
@@ -27,9 +27,9 @@ async function addNewProduct(productData) {
 async function getProductsBySearch(searchValue) {
   const { rows } = await pool.query(
     `
-    SELECT product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, category_name 
     FROM products 
-    JOIN categories 
+    JOIN categories
     ON products.category_id = categories.id 
     AND product_name = $1`,
     [searchValue],
@@ -40,7 +40,7 @@ async function getProductsBySearch(searchValue) {
 async function getProductsByCategory(category) {
   const { rows } = await pool.query(
     `
-    SELECT product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, category_name 
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id 
@@ -51,10 +51,15 @@ async function getProductsByCategory(category) {
   return rows;
 }
 
+async function deleteProductById(id) {
+  await pool.query("DELETE FROM products WHERE id = $1", [id]);
+}
+
 export {
   fetchCategories,
   fetchProducts,
   addNewProduct,
   getProductsBySearch,
   getProductsByCategory,
+  deleteProductById,
 };
