@@ -1,6 +1,7 @@
 import {
-  fetchProducts,
-  fetchCategories,
+  getProducts,
+  getProductById,
+  getCategories,
   addNewProduct,
   getProductsBySearch,
   getProductsByCategory,
@@ -9,8 +10,8 @@ import {
 
 async function getProductsPage(req, res) {
   try {
-    const products = await fetchProducts();
-    const categories = await fetchCategories();
+    const products = await getProducts();
+    const categories = await getCategories();
 
     res.render("products-page", { products, categories });
   } catch (err) {
@@ -18,8 +19,15 @@ async function getProductsPage(req, res) {
   }
 }
 
+async function getProductPage(req, res) {
+  const { id } = req.params;
+  const [product] = await getProductById(id);
+  console.log(product);
+  res.render("product-page", { product });
+}
+
 async function getFormPage(req, res) {
-  const categories = await fetchCategories();
+  const categories = await getCategories();
   res.render("form", { categories });
 }
 
@@ -35,11 +43,12 @@ async function searchProducts(req, res) {
 }
 
 async function showProductsByCategory(req, res) {
-  const { category } = req.params;
+  const { category } = req.query;
   const products = await getProductsByCategory(category);
-  const categories = await fetchCategories();
+  const categories = await getCategories();
   res.render("products-page", { products, categories });
 }
+
 async function deleteProduct(req, res) {
   const { id } = req.params;
   await deleteProductById(id);
@@ -48,6 +57,7 @@ async function deleteProduct(req, res) {
 
 export {
   getProductsPage,
+  getProductPage,
   getFormPage,
   createProductPost,
   showProductsByCategory,

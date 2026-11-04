@@ -3,6 +3,7 @@ import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
 import {
   getProductsPage,
+  getProductPage,
   getFormPage,
   createProductPost,
   searchProducts,
@@ -18,7 +19,8 @@ inventoryRouter.get("/products", getProductsPage);
 inventoryRouter.get("/products/create", getFormPage);
 inventoryRouter.post("/products/create", createProductPost);
 inventoryRouter.get("/products/search", searchProducts);
-inventoryRouter.get("/products/:category", showProductsByCategory);
+inventoryRouter.get("/products/category", showProductsByCategory);
+inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.delete("/products/:id", deleteProduct);
 
 export { inventoryRouter };

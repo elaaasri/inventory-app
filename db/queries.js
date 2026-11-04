@@ -1,16 +1,30 @@
 import pool from "./pool.js";
 
-async function fetchCategories() {
+async function getCategories() {
   const { rows } = await pool.query("SELECT * FROM categories");
   return rows;
 }
 
-async function fetchProducts() {
+async function getProducts() {
   const { rows } = await pool.query(`
     SELECT products.id, product_name, price, quantity, category_name 
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id`);
+
+  return rows;
+}
+
+async function getProductById(id) {
+  const { rows } = await pool.query(
+    `
+    SELECT product_name, price, quantity, category_name 
+    FROM products   
+    JOIN categories 
+    ON products.category_id = categories.id
+    WHERE products.id = $1`,
+    [id],
+  );
 
   return rows;
 }
@@ -56,8 +70,9 @@ async function deleteProductById(id) {
 }
 
 export {
-  fetchCategories,
-  fetchProducts,
+  getCategories,
+  getProducts,
+  getProductById,
   addNewProduct,
   getProductsBySearch,
   getProductsByCategory,

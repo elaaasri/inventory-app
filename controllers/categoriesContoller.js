@@ -1,8 +1,8 @@
-import { fetchCategories } from "../db/queries.js";
+import { getCategories } from "../db/queries.js";
 
 async function getCategoriesPage(req, res) {
   try {
-    const categories = await fetchCategories();
+    const categories = await getCategories();
     res.render("categories-page", { categories });
   } catch (err) {
     console.log(err);
