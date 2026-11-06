@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <h1>Edit Page</h1>
+
+    <form action="/products/<%= product?.id %>/update" method="post">
+      <label for="product-name">Name:</label>
+      <input
+        id="product-name"
+        name="prodName"
+        type="text"
+        value="<%= product?.product_name %>"
+      />
+
+      <label for="product-price">Price:</label>
+      <input
+        id="product-price"
+        name="prodPrice"
+        type="text"
+        value="<%= product?.price %>"
+      />
+
+      <label for="product-quantity">Quantity:</label>
+      <input
+        id="product-quantity"
+        name="prodQuantity"
+        type="text"
+        value="<%= product?.quantity %>"
+      />
+
+      <button id="submit-button" type="submit">save</button>
+    </form>
+  </body>
+</html>

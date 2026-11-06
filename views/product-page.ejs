@@ -3,16 +3,19 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Product Page</h1>
-    <% product?.forEach(( prod ) => { %>
-      <div>
-        <a href="/products/<%= prod?.id %>">
-          <span><%= prod?.product_name %></span>
-          <span><%= prod?.price %></span>
-          <span><%= prod?.quantity %></span>
-          <span><%= prod?.category_name %></span> 
-          <button class="remove-button" data-id="<%= prod?.id %>">remove</button>
-        </a>
-      </div>
-    <% }) %>  
+    <span><%= product?.product_name %></span>
+    <span><%= product?.price %></span>
+    <span><%= product?.quantity %></span>
+    <span><%= product?.category_name %></span>
+    <button type="button" class="remove-button" data-id="<%= product?.id %>">
+      remove
+    </button>
+    <a
+      href="/products/<%= product?.id %>/edit"
+      type="button"
+      class="edit-button"
+    >
+      edit
+    </a>
   </body>
 </html>

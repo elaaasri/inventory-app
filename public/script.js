@@ -1,13 +1,12 @@
-const removeButtons = document.querySelectorAll(".remove-button");
+const removeButton = document.querySelector(".remove-button");
+const editButton = document.querySelector(".edit-button");
 
-[...removeButtons].forEach((button) => {
-  button.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const id = e.target.dataset.id;
-    const response = await fetch(`/products/${id}`, { method: "DELETE" });
+removeButton?.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const id = e.target.dataset.id;
+  const response = await fetch(`/products/${id}/delete`, { method: "DELETE" });
 
-    if (response.ok) {
-      window.location.href = "/products";
-    }
-  });
+  if (response.ok) {
+    window.location.replace("/products");
+  }
 });

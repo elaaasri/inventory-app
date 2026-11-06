@@ -18,7 +18,7 @@ async function getProducts() {
 async function getProductById(id) {
   const { rows } = await pool.query(
     `
-    SELECT product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, category_name 
     FROM products   
     JOIN categories 
     ON products.category_id = categories.id
@@ -69,6 +69,23 @@ async function deleteProductById(id) {
   await pool.query("DELETE FROM products WHERE id = $1", [id]);
 }
 
+async function updateProductById(productData, id) {
+  const { prodName, categoryId, prodPrice, prodQuantity } = productData;
+  // adding categoryid and category_name later
+  const { rows } = await pool.query(
+    `
+    UPDATE products
+    SET product_name = $1,
+        price = $2,
+        quantity = $3
+    WHERE id = $4
+    RETURNING *
+    `,
+    [prodName, prodPrice, prodQuantity, id],
+  );
+  return rows;
+}
+
 export {
   getCategories,
   getProducts,
@@ -77,4 +94,5 @@ export {
   getProductsBySearch,
   getProductsByCategory,
   deleteProductById,
+  updateProductById,
 };

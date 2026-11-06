@@ -6,6 +6,7 @@ import {
   getProductsBySearch,
   getProductsByCategory,
   deleteProductById,
+  updateProductById,
 } from "../db/queries.js";
 
 async function getProductsPage(req, res) {
@@ -22,7 +23,6 @@ async function getProductsPage(req, res) {
 async function getProductPage(req, res) {
   const { id } = req.params;
   const [product] = await getProductById(id);
-  console.log(product);
   res.render("product-page", { product });
 }
 
@@ -55,6 +55,18 @@ async function deleteProduct(req, res) {
   res.sendStatus(200);
 }
 
+async function getEditpage(req, res) {
+  const { id } = req.params;
+  const [product] = await getProductById(id);
+  res.render("edit-page", { product });
+}
+
+async function updateProduct(req, res) {
+  const { id } = req.params;
+  const [product] = await updateProductById(req.body, id);
+  console.log("kokoo", product);
+  res.render("product-page", { product });
+}
 export {
   getProductsPage,
   getProductPage,
@@ -63,4 +75,6 @@ export {
   showProductsByCategory,
   searchProducts,
   deleteProduct,
+  getEditpage,
+  updateProduct,
 };
