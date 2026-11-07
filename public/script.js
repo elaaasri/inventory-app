@@ -1,3 +1,5 @@
+import { showProductsByCategory } from "../controllers/productsContoller";
+
 const removeButton = document.querySelector(".remove-button");
 const editButton = document.querySelector(".edit-button");
 
@@ -10,3 +12,5 @@ removeButton?.addEventListener("click", async (e) => {
     window.location.replace("/products");
   }
 });
+
+const categoryId = document.querySelector("#category-id");

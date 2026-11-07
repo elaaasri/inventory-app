@@ -32,7 +32,8 @@ inventoryRouter.get("/products/:id", getProductPage);
 // add delete to delete router done
 // opt changing word update in last route done
 // ask gpt about the edit feat! done
-// add category_id and category_name to edit feat!
+// add category_id and category_name to edit feat! done
+// add all categories feat
 
 export { inventoryRouter };
 

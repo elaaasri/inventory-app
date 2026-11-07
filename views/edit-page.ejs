@@ -29,6 +29,15 @@
         value="<%= product?.quantity %>"
       />
 
+      <label for="category-id">Category:</label>
+        <select id="category-id" name="categoryId">
+          <% categories?.forEach(( cat ) => { %>
+            <option value="<%= cat?.id %>" <%= cat?.category_name == product?.category_name && 'selected' %>>
+              <%= cat?.category_name %>
+            </option>
+        <% }); %>
+      </select>
+
       <button id="submit-button" type="submit">save</button>
     </form>
   </body>

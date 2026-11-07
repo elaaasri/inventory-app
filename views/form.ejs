@@ -15,8 +15,8 @@
 
       <label for="category-id">Category:</label>
       <select id="category-id" name="categoryId">
-        <% categories?.forEach(( category ) => { %>
-            <option value="<%= category?.id %>"><%= category?.category_name %></option>
+        <% categories?.forEach(( cat ) => { %>
+            <option value="<%= cat?.id %>"><%= cat?.category_name %></option>
         <% }); %>
       </select>
 

@@ -7,6 +7,7 @@ import {
   getProductsByCategory,
   deleteProductById,
   updateProductById,
+  getCategoryNameById,
 } from "../db/queries.js";
 
 async function getProductsPage(req, res) {
@@ -58,15 +59,16 @@ async function deleteProduct(req, res) {
 async function getEditpage(req, res) {
   const { id } = req.params;
   const [product] = await getProductById(id);
-  res.render("edit-page", { product });
+  const categories = await getCategories();
+  res.render("edit-page", { product, categories });
 }
 
 async function updateProduct(req, res) {
   const { id } = req.params;
   const [product] = await updateProductById(req.body, id);
-  console.log("kokoo", product);
   res.render("product-page", { product });
 }
+
 export {
   getProductsPage,
   getProductPage,
