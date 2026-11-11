@@ -7,15 +7,16 @@ import {
   getProductsByCategory,
   deleteProductById,
   updateProductById,
-  getCategoryNameById,
 } from "../db/queries.js";
+import { convertProductsImages } from "../utils/imageUtils.js";
 
 async function getProductsPage(req, res) {
   try {
     const products = await getProducts();
     const categories = await getCategories();
+    const updatedProducts = convertProductsImages(products);
 
-    res.render("products-page", { products, categories });
+    res.render("products-page", { products: updatedProducts, categories });
   } catch (err) {
     console.log(err);
   }
@@ -24,7 +25,11 @@ async function getProductsPage(req, res) {
 async function getProductPage(req, res) {
   const { id } = req.params;
   const [product] = await getProductById(id);
-  res.render("product-page", { product });
+  const updatedProduct = {
+    ...product,
+    image: `data:image/webp;base64,${product.image.toString("base64")}`,
+  };
+  res.render("product-page", { product: updatedProduct });
 }
 
 async function getFormPage(req, res) {
@@ -33,21 +38,26 @@ async function getFormPage(req, res) {
 }
 
 async function createProductPost(req, res) {
-  await addNewProduct(req.body);
+  const { body: productData, file } = req;
+
+  await addNewProduct(productData, file.buffer);
+
   res.redirect("/products");
 }
 
 async function searchProducts(req, res) {
   const { searchValue } = req.query;
   const products = await getProductsBySearch(searchValue);
-  res.render("search-page", { products });
+  const updatedProducts = convertProductsImages(products);
+  res.render("search-page", { products: updatedProducts });
 }
 
 async function showProductsByCategory(req, res) {
   const { category } = req.query;
   const products = await getProductsByCategory(category);
+  const updatedProducts = convertProductsImages(products);
   const categories = await getCategories();
-  res.render("products-page", { products, categories });
+  res.render("products-page", { products: updatedProducts, categories });
 }
 
 async function deleteProduct(req, res) {

@@ -11,6 +11,7 @@
           <span><%= prod?.price %></span>
           <span><%= prod?.quantity %></span>
           <span><%= prod?.category_name %></span>
+          <img src="<%= prod?.image %>" alt="<%= prod?.product_name %> image">
           <button class="remove-button" data-id="<%= prod?.id %>">remove</button>
         </div>
       <% }) %>  

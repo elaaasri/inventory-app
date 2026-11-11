@@ -3,6 +3,7 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Products Page</h1>
+    <img src="../" alt="">
      <% products?.forEach(( prod ) => { %>
       <div>
         <a href="/products/<%= prod?.id %>">
@@ -10,14 +11,16 @@
           <span><%= prod?.price %></span>
           <span><%= prod?.quantity %></span>
           <span><%= prod?.category_name %></span>
+          <img src="<%= prod?.image %>" alt="<%= prod?.product_name %> image">
         </a>
       </div>
-    <% }) %>    
+    <% }) %>
     
     <a href="/products/create">+ Add Product</a>
 
     <div>
       <h3>Categories:</h3>
+      <a href="/products">all</a>
       <% categories?.forEach(( { category_name } ) => { %>
         <div>
           <a href="/products/category?category=<%= category_name %>"><%= category_name %></a>

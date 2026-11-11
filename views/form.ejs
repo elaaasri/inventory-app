@@ -3,7 +3,8 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Add Product</h1>
-    <form action="/products/create" method="post">
+    <form action="/products/create" method="post" enctype="multipart/form-data"
+>
       <label for="product-name">Name:</label>
       <input id="product-name" name="prodName" type="text" />
 
@@ -19,6 +20,9 @@
             <option value="<%= cat?.id %>"><%= cat?.category_name %></option>
         <% }); %>
       </select>
+
+      <label for="product-image">Image:</label>
+      <input id="product-image" name="prodImage" type="file" />
 
       <button id="submit-button" type="submit">Submit</button>
     </form>

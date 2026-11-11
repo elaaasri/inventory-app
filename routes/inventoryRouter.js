@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
 import {
@@ -13,13 +14,20 @@ import {
   updateProduct,
 } from "../controllers/productsContoller.js";
 
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 const inventoryRouter = Router();
 
 inventoryRouter.get("/", renderIndex);
 inventoryRouter.get("/categories", getCategoriesPage);
 inventoryRouter.get("/products", getProductsPage);
 inventoryRouter.get("/products/create", getFormPage);
-inventoryRouter.post("/products/create", createProductPost);
+inventoryRouter.post(
+  "/products/create",
+  upload.single("prodImage"),
+  createProductPost,
+);
 inventoryRouter.get("/products/search", searchProducts);
 inventoryRouter.get("/products/category", showProductsByCategory);
 inventoryRouter.delete("/products/:id/delete", deleteProduct);
@@ -27,25 +35,17 @@ inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
 
-// here;
-// change create to new done
-// add delete to delete router done
-// opt changing word update in last route done
-// ask gpt about the edit feat! done
-// add category_id and category_name to edit feat! done
-// add all categories feat
-
 export { inventoryRouter };
 
 // filters products feature done
 // search bar feature done
 // delete product done
 // add product page! done
-// edit product
+// edit product done
 // add image to db
 // handle db errors
+// fix db types!
 // sanitaion
 // not found pages
-// fix db types!
 // delete/edit access to admin only!
 // style css

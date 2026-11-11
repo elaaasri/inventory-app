@@ -1,14 +1,14 @@
 import pool from "./pool.js";
 
 async function getCategories() {
-  const { rows } = await pool.query("SELECT category_name FROM categories");
+  const { rows } = await pool.query("SELECT * FROM categories");
 
   return rows;
 }
 
 async function getProducts() {
   const { rows } = await pool.query(`
-    SELECT products.id, product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, image, category_name
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id`);
@@ -19,7 +19,7 @@ async function getProducts() {
 async function getProductById(id) {
   const { rows } = await pool.query(
     `
-    SELECT products.id, product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, image, category_name 
     FROM products   
     JOIN categories
     ON products.category_id = categories.id
@@ -30,19 +30,19 @@ async function getProductById(id) {
   return rows;
 }
 
-async function addNewProduct(productData) {
+async function addNewProduct(productData, image) {
   const { prodName, categoryId, prodPrice, prodQuantity } = productData;
 
   await pool.query(
-    "INSERT INTO products (product_name, category_id, price, quantity) VALUES ($1, $2, $3, $4)",
-    [prodName, categoryId, prodPrice, prodQuantity],
+    "INSERT INTO products (product_name, category_id, price, quantity, image) VALUES ($1, $2, $3, $4, $5)",
+    [prodName, categoryId, prodPrice, prodQuantity, image],
   );
 }
 
 async function getProductsBySearch(searchValue) {
   const { rows } = await pool.query(
     `
-    SELECT products.id, product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, image, category_name 
     FROM products 
     JOIN categories
     ON products.category_id = categories.id 
@@ -56,7 +56,7 @@ async function getProductsBySearch(searchValue) {
 async function getProductsByCategory(category) {
   const { rows } = await pool.query(
     `
-    SELECT products.id, product_name, price, quantity, category_name 
+    SELECT products.id, product_name, price, quantity, image, category_name 
     FROM products 
     JOIN categories 
     ON products.category_id = categories.id 
@@ -71,6 +71,7 @@ async function deleteProductById(id) {
   await pool.query("DELETE FROM products WHERE id = $1", [id]);
 }
 
+// here
 async function updateProductById(productData, id) {
   const { prodName, categoryId, prodPrice, prodQuantity } = productData;
 
@@ -96,15 +97,6 @@ async function updateProductById(productData, id) {
   return rows;
 }
 
-async function getCategoryNameById(id) {
-  const { rows } = await pool.query(
-    "SELECT category_name FROM categories WHERE id = $1",
-    [id],
-  );
-
-  return rows;
-}
-
 export {
   getCategories,
   getProducts,
@@ -114,5 +106,4 @@ export {
   getProductsByCategory,
   deleteProductById,
   updateProductById,
-  getCategoryNameById,
 };
