@@ -27,7 +27,7 @@ async function getProductPage(req, res) {
   const [product] = await getProductById(id);
   const updatedProduct = {
     ...product,
-    image: `data:image/webp;base64,${product.image.toString("base64")}`,
+    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
   };
   res.render("product-page", { product: updatedProduct });
 }
@@ -69,8 +69,12 @@ async function deleteProduct(req, res) {
 async function getEditpage(req, res) {
   const { id } = req.params;
   const [product] = await getProductById(id);
+  const updatedProduct = {
+    ...product,
+    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
+  };
   const categories = await getCategories();
-  res.render("edit-page", { product, categories });
+  res.render("edit-page", { product: updatedProduct, categories });
 }
 
 async function updateProduct(req, res) {
