@@ -67,14 +67,24 @@ async function deleteProduct(req, res) {
 }
 
 async function getEditpage(req, res) {
-  const { id } = req.params;
-  const [product] = await getProductById(id);
-  const updatedProduct = {
-    ...product,
-    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
-  };
-  const categories = await getCategories();
-  res.render("edit-page", { product: updatedProduct, categories });
+  try {
+    const { id } = req.params;
+    if (!Number.isInteger(Number(id))) {
+      res.send("zbe");
+    }
+    const categories = await getCategories();
+    const [product] = await getProductById(id);
+    const updatedProduct = {
+      ...product,
+      image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
+    };
+
+    if (!product) {
+      return res.status(404).render("404");
+    }
+
+    res.render("edit-page", { product: updatedProduct, categories });
+  } catch (error) {}
 }
 
 async function updateProduct(req, res) {
@@ -82,6 +92,10 @@ async function updateProduct(req, res) {
   const [product] = await updateProductById(req.body, id);
   res.render("product-page", { product });
 }
+
+const notFoundPage = (req, res) => {
+  res.status(404).render("404");
+};
 
 export {
   getProductsPage,
@@ -93,4 +107,5 @@ export {
   deleteProduct,
   getEditpage,
   updateProduct,
+  notFoundPage,
 };

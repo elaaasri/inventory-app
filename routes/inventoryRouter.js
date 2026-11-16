@@ -12,12 +12,13 @@ import {
   deleteProduct,
   getEditpage,
   updateProduct,
+  notFoundPage,
 } from "../controllers/productsContoller.js";
 
+const inventoryRouter = Router();
 const upload = multer({
   storage: multer.memoryStorage(),
 });
-const inventoryRouter = Router();
 
 inventoryRouter.get("/", renderIndex);
 inventoryRouter.get("/categories", getCategoriesPage);
@@ -34,6 +35,7 @@ inventoryRouter.delete("/products/:id/delete", deleteProduct);
 inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
+inventoryRouter.use(notFoundPage);
 
 export { inventoryRouter };
 
@@ -42,10 +44,11 @@ export { inventoryRouter };
 // delete product done
 // add product page! done
 // edit product done
-// add image to db
-// handle db errors
+// add image to db done
 // fix db types!
-// sanitaion
 // not found pages
+// fix routes that wont show not found page correctly!
+// handle db errors
+// validation and sanitization
 // delete/edit access to admin only!
 // style css
