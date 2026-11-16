@@ -36,6 +36,9 @@ inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
+inventoryRouter.use((err, req, res, next) => {
+  res.status(500).send("Internal Server Error!");
+});
 
 export { inventoryRouter };
 
@@ -45,8 +48,10 @@ export { inventoryRouter };
 // add product page! done
 // edit product done
 // add image to db done
-// fix db types!
-// not found pages
+// 404 not found pages done
+// fix db types! done
+// 400 bad request
+// fix helper to handle both array and a obj
 // fix routes that wont show not found page correctly!
 // handle db errors
 // validation and sanitization

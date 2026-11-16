@@ -66,26 +66,31 @@ async function deleteProduct(req, res) {
   res.sendStatus(200);
 }
 
-async function getEditpage(req, res) {
+const getEditpage = async (req, res, next) => {
   try {
     const { id } = req.params;
+
     if (!Number.isInteger(Number(id))) {
-      res.send("zbe");
+      return res.status(400).send("Invalid ID");
     }
+
     const categories = await getCategories();
     const [product] = await getProductById(id);
-    const updatedProduct = {
-      ...product,
-      image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
-    };
 
     if (!product) {
       return res.status(404).render("404");
     }
 
+    const updatedProduct = {
+      ...product,
+      image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
+    };
+
     res.render("edit-page", { product: updatedProduct, categories });
-  } catch (error) {}
-}
+  } catch (err) {
+    next(err);
+  }
+};
 
 async function updateProduct(req, res) {
   const { id } = req.params;
