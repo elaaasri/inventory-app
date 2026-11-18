@@ -38,9 +38,13 @@ inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
 
 inventoryRouter.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
   console.log(err);
 
-  res.render("error", { message: "err", statusCode: 400 });
+  res.status(statusCode).render("error", {
+    message: statusCode === 500 ? "Internal Server Error!" : err.message,
+    statusCode,
+  });
 });
 
 export { inventoryRouter };
