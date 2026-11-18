@@ -9,6 +9,7 @@ import {
   updateProductById,
 } from "../db/queries.js";
 import { convertProductsImages } from "../utils/imageUtils.js";
+import { AppError } from "../errors/AppError.js";
 
 async function getProductsPage(req, res) {
   try {
@@ -66,30 +67,26 @@ async function deleteProduct(req, res) {
   res.sendStatus(200);
 }
 
-const getEditpage = async (req, res, next) => {
-  try {
-    const { id } = req.params;
+const getEditpage = async (req, res) => {
+  const { id } = req.params;
 
-    if (!Number.isInteger(Number(id))) {
-      return res.status(400).send("Invalid ID");
-    }
-
-    const categories = await getCategories();
-    const [product] = await getProductById(id);
-
-    if (!product) {
-      return res.status(404).render("404");
-    }
-
-    const updatedProduct = {
-      ...product,
-      image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
-    };
-
-    res.render("edit-page", { product: updatedProduct, categories });
-  } catch (err) {
-    next(err);
+  if (!Number.isInteger(Number(id))) {
+    throw new AppError("Invalid Id!", 400);
   }
+
+  const categories = await getCategories();
+  const [product] = await getProductById(id);
+
+  if (!product) {
+    throw new AppError("Not Found Page!", 404);
+  }
+
+  const updatedProduct = {
+    ...product,
+    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
+  };
+
+  res.render("edit-page", { product: updatedProduct, categories });
 };
 
 async function updateProduct(req, res) {

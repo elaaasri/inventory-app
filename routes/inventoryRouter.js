@@ -36,8 +36,11 @@ inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
+
 inventoryRouter.use((err, req, res, next) => {
-  res.status(500).render("500");
+  console.log(err);
+
+  res.render("error", { message: "err", statusCode: 400 });
 });
 
 export { inventoryRouter };
