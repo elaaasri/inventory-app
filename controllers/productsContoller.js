@@ -8,7 +8,10 @@ import {
   deleteProductById,
   updateProductById,
 } from "../db/queries.js";
-import { convertProductsImages } from "../utils/imageUtils.js";
+import {
+  convertProductsImages,
+  convertProductImage,
+} from "../utils/imageUtils.js";
 import { AppError } from "../errors/AppError.js";
 
 async function getProductsPage(req, res) {
@@ -26,10 +29,8 @@ async function getProductsPage(req, res) {
 async function getProductPage(req, res) {
   const { id } = req.params;
   const [product] = await getProductById(id);
-  const updatedProduct = {
-    ...product,
-    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
-  };
+  const updatedProduct = convertProductImage(product);
+
   res.render("product-page", { product: updatedProduct });
 }
 
@@ -81,10 +82,7 @@ const getEditpage = async (req, res) => {
     throw new AppError("Not Found Page!", 404);
   }
 
-  const updatedProduct = {
-    ...product,
-    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
-  };
+  const updatedProduct = convertProductImage(product);
 
   res.render("edit-page", { product: updatedProduct, categories });
 };

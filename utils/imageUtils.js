@@ -5,4 +5,11 @@ const convertProductsImages = (products) => {
   }));
 };
 
-export { convertProductsImages };
+const convertProductImage = (product) => {
+  return {
+    ...product,
+    image: `data:image/webp;base64,${product?.image?.toString("base64")}`,
+  };
+};
+
+export { convertProductsImages, convertProductImage };

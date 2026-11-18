@@ -36,7 +36,6 @@ inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
-
 inventoryRouter.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.log(err);
@@ -57,9 +56,9 @@ export { inventoryRouter };
 // add image to db done
 // fix db types! done
 // 404 not found pages done
-// 500 page
-// 400 page
-// custom error class
+// 500 page done
+// 400 page done
+// custom error class done
 // fix helper to handle both array and a obj
 // fix routes that wont show not found page correctly!
 // handle db errors
