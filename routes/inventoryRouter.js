@@ -60,8 +60,9 @@ export { inventoryRouter };
 // 400 page done
 // custom error class done
 // fix helper to handle both array and a obj done
-// fix routes that wont show not found page correctly!
+// fix routes that wont show not found page correctly! done
 // handle all db errors
+//     getProductPage
 // validation and sanitization
 // delete/edit access to admin only!
 // style css

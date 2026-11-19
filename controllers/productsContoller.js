@@ -15,44 +15,49 @@ import {
 import { AppError } from "../errors/AppError.js";
 
 async function getProductsPage(req, res) {
-  try {
-    const products = await getProducts();
-    const categories = await getCategories();
-    const updatedProducts = convertProductsImages(products);
+  const products = await getProducts();
+  const categories = await getCategories();
+  const updatedProducts = convertProductsImages(products);
 
-    res.render("products-page", { products: updatedProducts, categories });
-  } catch (err) {
-    console.log(err);
-  }
+  res.render("products-page", { products: updatedProducts, categories });
 }
 
-async function getProductPage(req, res) {
+const getProductPage = async (req, res) => {
   const { id } = req.params;
   const product = await getProductById(id);
+
+  if (!product) {
+    throw new AppError("Product Not Found!", 404);
+  }
+
   const updatedProduct = convertProductImage(product);
-
   res.render("product-page", { product: updatedProduct });
-}
+};
 
-async function getFormPage(req, res) {
+const getFormPage = async (req, res) => {
   const categories = await getCategories();
   res.render("form", { categories });
-}
+};
 
-async function createProductPost(req, res) {
+const createProductPost = async (req, res) => {
   const { body: productData, file } = req;
-
   await addNewProduct(productData, file.buffer);
 
   res.redirect("/products");
-}
+};
 
-async function searchProducts(req, res) {
+const searchProducts = async (req, res) => {
   const { searchValue } = req.query;
   const products = await getProductsBySearch(searchValue);
+
+  if (!products) {
+    throw new AppError("");
+  }
+
   const updatedProducts = convertProductsImages(products);
+
   res.render("search-page", { products: updatedProducts });
-}
+};
 
 async function showProductsByCategory(req, res) {
   const { category } = req.query;
@@ -88,7 +93,7 @@ const getEditpage = async (req, res) => {
   res.render("edit-page", { product: updatedProduct, categories });
 };
 
-async function updateProduct(req, res, next) {
+const updateProduct = async (req, res) => {
   const { id } = req.params;
   const product = await updateProductById(req.body, id);
 
@@ -98,7 +103,7 @@ async function updateProduct(req, res, next) {
 
   const updatedProduct = convertProductImage(product);
   res.render("product-page", { product: updatedProduct });
-}
+};
 
 const notFoundPage = (req, res) => {
   res.status(404).render("404");
