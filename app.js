@@ -22,10 +22,3 @@ app.listen(PORT, (err) => {
 
 // console.log(process.env.DB_URL);
 // console.log(process.env.LOCAL_DB_URL);
-
-// setting local db ==> done
-// how to check the db connection
-// switching up between local and remote dbs
-
-// all categories needed
-// create second table products

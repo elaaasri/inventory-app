@@ -28,7 +28,7 @@ async function getProductsPage(req, res) {
 
 async function getProductPage(req, res) {
   const { id } = req.params;
-  const [product] = await getProductById(id);
+  const product = await getProductById(id);
   const updatedProduct = convertProductImage(product);
 
   res.render("product-page", { product: updatedProduct });
@@ -76,15 +76,11 @@ const deleteProduct = async (req, res) => {
 const getEditpage = async (req, res) => {
   const { id } = req.params;
 
-  if (!Number.isInteger(Number(id))) {
-    throw new AppError("Invalid Id!", 400);
-  }
-
   const categories = await getCategories();
-  const [product] = await getProductById(id);
+  const product = await getProductById(id);
 
   if (!product) {
-    throw new AppError("Not Found Page!", 404);
+    throw new AppError("Product Found Page!", 404);
   }
 
   const updatedProduct = convertProductImage(product);
@@ -94,9 +90,13 @@ const getEditpage = async (req, res) => {
 
 async function updateProduct(req, res, next) {
   const { id } = req.params;
-  const [product] = await updateProductById(req.body, id);
-  const updatedProduct = convertProductImage(product);
+  const product = await updateProductById(req.body, id);
 
+  if (!product) {
+    throw new AppError("Product Not Found!", 404);
+  }
+
+  const updatedProduct = convertProductImage(product);
   res.render("product-page", { product: updatedProduct });
 }
 

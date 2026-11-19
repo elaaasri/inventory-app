@@ -61,7 +61,8 @@ export { inventoryRouter };
 // custom error class done
 // fix helper to handle both array and a obj done
 // fix routes that wont show not found page correctly!
-// handle db errors
+// handle all db errors
 // validation and sanitization
 // delete/edit access to admin only!
 // style css
+// supports mobile

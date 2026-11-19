@@ -27,7 +27,7 @@ async function getProductById(id) {
     [id],
   );
 
-  return rows;
+  return rows[0];
 }
 
 async function addNewProduct(productData, image) {
@@ -104,7 +104,7 @@ async function updateProductById(productData, id) {
     [prodPrice, prodQuantity, categoryId, id],
   );
 
-  return rows;
+  return rows[0];
 }
 
 export {
