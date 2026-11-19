@@ -92,10 +92,12 @@ const getEditpage = async (req, res) => {
   res.render("edit-page", { product: updatedProduct, categories });
 };
 
-async function updateProduct(req, res) {
+async function updateProduct(req, res, next) {
   const { id } = req.params;
   const [product] = await updateProductById(req.body, id);
-  res.render("product-page", { product });
+  const updatedProduct = convertProductImage(product);
+
+  res.render("product-page", { product: updatedProduct });
 }
 
 const notFoundPage = (req, res) => {

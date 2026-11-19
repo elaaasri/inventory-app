@@ -77,25 +77,31 @@ const deleteProductById = async (id) => {
 };
 
 async function updateProductById(productData, id) {
-  const { prodName, categoryId, prodPrice, prodQuantity } = productData;
+  const { prodPrice, prodQuantity, categoryId } = productData;
 
   const { rows } = await pool.query(
     `
-    WITH p AS (
+    WITH updated_product AS (
       UPDATE products
-      SET product_name = $1,
-          category_id = $2,
-          price = $3,
-          quantity = $4
-      WHERE id = $5
+      SET
+      price = $1,
+      quantity = $2,
+      category_id = $3
+      WHERE id = $4
       RETURNING *
       )
-      SELECT p.id, p.product_name, p.price, p.quantity, category_name 
-      FROM p 
+      SELECT
+      updated_product.id,
+      updated_product.product_name,
+      updated_product.price,
+      updated_product.quantity,
+      updated_product.image,
+      category_name
+      FROM updated_product
       JOIN categories 
-      ON p.category_id= categories.id
+        ON updated_product.category_id = categories.id
     `,
-    [prodName, categoryId, prodPrice, prodQuantity, id],
+    [prodPrice, prodQuantity, categoryId, id],
   );
 
   return rows;

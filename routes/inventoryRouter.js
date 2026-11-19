@@ -33,13 +33,12 @@ inventoryRouter.get("/products/search", searchProducts);
 inventoryRouter.get("/products/category", showProductsByCategory);
 inventoryRouter.delete("/products/:id/delete", deleteProduct);
 inventoryRouter.get("/products/:id/edit", getEditpage);
-inventoryRouter.post("/products/:id/update", updateProduct);
+inventoryRouter.patch("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
 // inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.log(err);
-  console.log("zbe");
 
   res.status(statusCode).render("error", {
     message: statusCode === 500 ? "Internal Server Error!" : err.message,
