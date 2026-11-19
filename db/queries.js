@@ -67,9 +67,9 @@ async function getProductsByCategory(category) {
   return rows;
 }
 
-async function deleteProductById(id) {
-  await pool.query("DELETE FROM products WHERE id = $1", [id]);
-}
+const deleteProductById = async (id) => {
+  await pool.query("DELETE FROM products WHERE id = $1 RETURNING *", [id]);
+};
 
 async function updateProductById(productData, id) {
   const { prodName, categoryId, prodPrice, prodQuantity } = productData;

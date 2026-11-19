@@ -9,9 +9,13 @@
     <span><%= product?.category_name %></span>
     <img src="<%= product?.image %>" alt="<%= product?.product_name %> image" />
 
-    <button type="button" class="remove-button" data-id="<%= product?.id %>">
-      remove
-    </button>
+    <form
+      action="/products/<%= product?.id %>/delete?_method=DELETE"
+      method="post"
+    >
+      <button type="submit" class="remove-button">remove</button>
+    </form>
+
     <a
       href="/products/<%= product?.id %>/edit"
       type="button"

@@ -35,10 +35,11 @@ inventoryRouter.delete("/products/:id/delete", deleteProduct);
 inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.post("/products/:id/update", updateProduct);
 inventoryRouter.get("/products/:id", getProductPage);
-inventoryRouter.use(notFoundPage);
+// inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   console.log(err);
+  console.log("zbe");
 
   res.status(statusCode).render("error", {
     message: statusCode === 500 ? "Internal Server Error!" : err.message,
@@ -59,7 +60,7 @@ export { inventoryRouter };
 // 500 page done
 // 400 page done
 // custom error class done
-// fix helper to handle both array and a obj
+// fix helper to handle both array and a obj done
 // fix routes that wont show not found page correctly!
 // handle db errors
 // validation and sanitization
