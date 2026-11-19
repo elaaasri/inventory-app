@@ -62,17 +62,15 @@ async function showProductsByCategory(req, res) {
   res.render("products-page", { products: updatedProducts, categories });
 }
 
-const deleteProduct = async (req, res, next) => {
-  // throw new Error("azeaze");
-  // throw new AppError("Product Not Found!", 400);
-  try {
-    const { id } = req.params;
-    await deleteProductById(id);
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const deletedProductCount = await deleteProductById(id);
 
-    res.redirect("/products");
-  } catch (err) {
-    next(err);
+  if (deletedProductCount === 0) {
+    throw new AppError("Product Not Found!", 404);
   }
+
+  res.redirect("/products");
 };
 
 const getEditpage = async (req, res) => {
