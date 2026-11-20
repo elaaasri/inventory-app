@@ -14,13 +14,13 @@ import {
 } from "../utils/imageUtils.js";
 import { AppError } from "../errors/AppError.js";
 
-async function getProductsPage(req, res) {
+const getProductsPage = async (req, res) => {
   const products = await getProducts();
   const categories = await getCategories();
   const updatedProducts = convertProductsImages(products);
 
   res.render("products-page", { products: updatedProducts, categories });
-}
+};
 
 const getProductPage = async (req, res) => {
   const { id } = req.params;
@@ -49,23 +49,19 @@ const createProductPost = async (req, res) => {
 const searchProducts = async (req, res) => {
   const { searchValue } = req.query;
   const products = await getProductsBySearch(searchValue);
-
-  if (!products) {
-    throw new AppError("");
-  }
-
   const updatedProducts = convertProductsImages(products);
 
   res.render("search-page", { products: updatedProducts });
 };
 
-async function showProductsByCategory(req, res) {
+const showProductsByCategory = async (req, res) => {
   const { category } = req.query;
+  const categories = await getCategories();
   const products = await getProductsByCategory(category);
   const updatedProducts = convertProductsImages(products);
-  const categories = await getCategories();
+
   res.render("products-page", { products: updatedProducts, categories });
-}
+};
 
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -105,6 +101,17 @@ const updateProduct = async (req, res) => {
   res.render("product-page", { product: updatedProduct });
 };
 
+const verifyAdminPassword = async (req, res, next) => {
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const { passwordInput } = req.body;
+
+  if (adminPassword != passwordInput) {
+    throw new AppError("Invalid Password!", 401);
+  }
+
+  next();
+};
+
 const notFoundPage = (req, res) => {
   res.status(404).render("404");
 };
@@ -119,5 +126,6 @@ export {
   deleteProduct,
   getEditpage,
   updateProduct,
+  verifyAdminPassword,
   notFoundPage,
 };
