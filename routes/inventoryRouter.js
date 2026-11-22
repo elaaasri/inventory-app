@@ -38,7 +38,11 @@ inventoryRouter.delete(
   deleteProduct,
 );
 inventoryRouter.get("/products/:id/edit", getEditpage);
-inventoryRouter.patch("/products/:id/update", updateProduct);
+inventoryRouter.patch(
+  "/products/:id/update",
+  verifyAdminPassword,
+  updateProduct,
+);
 inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
@@ -67,17 +71,8 @@ export { inventoryRouter };
 // fix helper to handle both array and a obj done
 // fix routes that wont show not found page correctly! done
 // handle all db errors done
+// delete/edit access to admin only!
 // validation and sanitization
 // style css
 // supports mobile
 // complete recap
-
-// delete/edit access to admin only!
-// add a input password if its correct let it
-// otherewise dont let it
-/**
- * button clicked
- *
- *
- *
- */

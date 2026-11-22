@@ -1,21 +1,12 @@
-// const removeButton = document.querySelector(".remove-button");
-// const editButton = document.querySelector(".edit-button");
+const removeButton = document.querySelector("#remove-button");
+const editSaveButton = document.querySelector("#edit-save-button");
 
-// removeButton.addEventListener("click", (e) => {
-//   const pw = e.target.dataset.pw;
-//   console.log(pw);
-//   const pwInput = prompt("Enter Password!");
-//   if (pwInput !== pw) {
-//     alert("Wrong Password!");
-//     e.preventDefault();
-//     return;
-//   }
-// });
+editSaveButton?.addEventListener("click", (e) => {
+  const pwInput = prompt("Enter Password!");
+  e.target.closest("form").querySelector("#password-input").value = pwInput;
+});
 
-const removeButton = document.querySelector(".remove-button");
-const editButton = document.querySelector(".edit-button");
-
-removeButton?.addEventListener("click", () => {
+removeButton?.addEventListener("click", (e) => {
   const pwInput = prompt("Enter Password!");
   e.target.closest("form").querySelector("#password-input").value = pwInput;
 });

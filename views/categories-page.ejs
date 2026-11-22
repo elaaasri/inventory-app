@@ -5,7 +5,7 @@
     <h1>Categories Page</h1>
     <a href="/products">all</a>
     <% categories?.forEach(( { category_name } ) => { %>
-      <a href="/products/category?  =<%= category_name %>"><%= category_name %></a>
+      <a href="/products/category?category=<%= category_name %>"><%= category_name %></a>
     <% }) %>
   </body>
 </html>
