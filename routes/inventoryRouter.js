@@ -1,5 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
+import { body, validationResult, matchedData } from "express-validator";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
 import {
@@ -21,6 +22,33 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
+const validateProductForm = [
+  body("prodName")
+    .trim()
+    .notEmpty()
+    .withMessage("required product name!")
+    .not()
+    .isNumeric()
+    .withMessage("product name cannot be numeric!"),
+  body("prodPrice")
+    .trim()
+    .notEmpty()
+    .withMessage("required product price!")
+    .isNumeric()
+    .withMessage("product price must be numeric!"),
+  body("prodQuantity")
+    .trim()
+    .notEmpty()
+    .withMessage("required product quantity!")
+    .isNumeric()
+    .withMessage("product quantity must be numeric!"),
+  body("categoryId")
+    .trim()
+    .notEmpty()
+    .withMessage("required product category!"),
+  body("prodImage").trim().notEmpty().withMessage("required product image!"),
+];
+
 inventoryRouter.get("/", renderIndex);
 inventoryRouter.get("/categories", getCategoriesPage);
 inventoryRouter.get("/products", getProductsPage);
@@ -28,6 +56,7 @@ inventoryRouter.get("/products/create", getFormPage);
 inventoryRouter.post(
   "/products/create",
   upload.single("prodImage"),
+  validateProductForm,
   createProductPost,
 );
 inventoryRouter.get("/products/search", searchProducts);
@@ -71,8 +100,9 @@ export { inventoryRouter };
 // fix helper to handle both array and a obj done
 // fix routes that wont show not found page correctly! done
 // handle all db errors done
-// delete/edit access to admin only!
+// delete/edit access to admin only! done
 // validation and sanitization
 // style css
 // supports mobile
+// test prod
 // complete recap

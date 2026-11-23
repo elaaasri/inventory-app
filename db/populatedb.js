@@ -13,7 +13,7 @@ const SQL = `
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       product_name VARCHAR(100) NOT NULL,
       category_id INTEGER REFERENCES categories(id),
-      price NUMERIC(10, 2) NOT NULL,
+      price INTEGER NOT NULL,
       quantity INTEGER NOT NULL,
       image BYTEA
   );
@@ -21,13 +21,13 @@ const SQL = `
 // INSERT INTO products (product_name, price, category_id, quantity, image_url)
 // VALUES ('banana', 5.5, 1, 10, NULL);
 
-async function main() {
+const main = async () => {
   const client = new Client({
     connectionString: process.env.LOCAL_DB_URL,
   });
   await client.connect();
   await client.query(SQL);
   await client.end();
-}
+};
 
 main();

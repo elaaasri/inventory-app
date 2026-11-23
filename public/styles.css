@@ -2,3 +2,6 @@ img {
   background-color: red;
   width: 50px;
 }
+.error-message {
+  color: red;
+}

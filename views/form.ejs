@@ -3,16 +3,19 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <h1>Add Product</h1>
-    <form action="/products/create" method="post" enctype="multipart/form-data"
->
+
+    <form action="/products/create" method="post" enctype="multipart/form-data" >
       <label for="product-name">Name:</label>
-      <input id="product-name" name="prodName" type="text" />
+      <input id="product-name" name="prodName" type="text"/>
+      <span class="error-message"><%= errors?.prodName?.msg %></span>
 
       <label for="product-price">Price:</label>
       <input id="product-price" name="prodPrice" type="text" />
+      <span class="error-message"><%= errors?.prodPrice?.msg %></span>
 
       <label for="product-quantity">Quantity:</label>
       <input id="product-quantity" name="prodQuantity" type="text" />
+      <span class="error-message"><%= errors?.prodQuantity?.msg %></span>
 
       <label for="category-id">Category:</label>
       <select id="category-id" name="categoryId">
@@ -20,9 +23,13 @@
             <option value="<%= cat?.id %>"><%= cat?.category_name %></option>
         <% }); %>
       </select>
+      <span class="error-message"><%= errors?.categoryId?.msg %></span>
+
 
       <label for="product-image">Image:</label>
       <input id="product-image" name="prodImage" type="file" />
+      <span class="error-message"><%= errors?.prodImage?.msg %></span>
+
 
       <button id="submit-button" type="submit">Submit</button>
     </form>
