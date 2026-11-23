@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { body, validationResult, matchedData } from "express-validator";
+import { validateProductForm } from "../validators/productValidator.js";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
 import {
@@ -21,33 +21,6 @@ const inventoryRouter = Router();
 const upload = multer({
   storage: multer.memoryStorage(),
 });
-
-const validateProductForm = [
-  body("prodName")
-    .trim()
-    .notEmpty()
-    .withMessage("required product name!")
-    .not()
-    .isNumeric()
-    .withMessage("product name cannot be numeric!"),
-  body("prodPrice")
-    .trim()
-    .notEmpty()
-    .withMessage("required product price!")
-    .isNumeric()
-    .withMessage("product price must be numeric!"),
-  body("prodQuantity")
-    .trim()
-    .notEmpty()
-    .withMessage("required product quantity!")
-    .isNumeric()
-    .withMessage("product quantity must be numeric!"),
-  body("categoryId")
-    .trim()
-    .notEmpty()
-    .withMessage("required product category!"),
-  body("prodImage").trim().notEmpty().withMessage("required product image!"),
-];
 
 inventoryRouter.get("/", renderIndex);
 inventoryRouter.get("/categories", getCategoriesPage);
