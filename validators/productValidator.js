@@ -20,7 +20,12 @@ const validateProductForm = [
 
   requiredField("categoryId", "required product category!"),
 
-  requiredField("prodImage", "required product image!"),
+  body("prodImage").custom((value, { req }) => {
+    if (!req.file) {
+      throw new Error("required product image!");
+    }
+    return true;
+  }),
 ];
 
 export { validateProductForm };
