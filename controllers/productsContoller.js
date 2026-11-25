@@ -13,7 +13,7 @@ import {
   convertProductImage,
 } from "../utils/imageUtils.js";
 import { AppError } from "../errors/AppError.js";
-import { validationResult } from "express-validator";
+import { matchedData, validationResult } from "express-validator";
 
 const getProductsPage = async (req, res) => {
   const products = await getProducts();
@@ -40,45 +40,24 @@ const getFormPage = async (req, res) => {
   res.render("form", { categories, errors: {} });
 };
 
-// We can pass an entire array of middleware validations to our controller.
-// const controller = [
-//   validateUser,
-//   // and then in controller!
-//   (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).render("index", {
-//         errors: errors.array(),
-//       });
-//     }
-//     //
-//     const { name } = matchedData(req);
-//     addUser({ name });
-//     res.redirect("/");
-//   },
-// ];
-
 const createProductPost = async (req, res) => {
-  const { body: productData, file } = req;
-  const errors = validationResult(req);
   const categories = await getCategories();
-
-  console.log("zbe", errors);
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(404).render("form", {
+    return res.status(400).render("form", {
       categories,
       errors: errors.mapped(),
     });
   }
 
-  await addNewProduct(productData, file.buffer);
+  await addNewProduct(req.body, req.file.buffer);
 
   res.redirect("/products");
 };
 
 const searchProducts = async (req, res) => {
-  const { searchValue } = req.query;
+  const { searchValue } = matchedData(req);
   const products = await getProductsBySearch(searchValue);
   const updatedProducts = convertProductsImages(products);
 
@@ -98,7 +77,7 @@ const deleteProduct = async (req, res) => {
   const { id } = req.params;
   const deletedProductCount = await deleteProductById(id);
 
-  if (deletedProductCount === 0) {
+  if (deletedProductCount == 0) {
     throw new AppError("Product Not Found!", 404);
   }
 

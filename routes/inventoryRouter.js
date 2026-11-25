@@ -1,6 +1,9 @@
 import { Router } from "express";
 import multer from "multer";
-import { validateProductForm } from "../validators/productValidator.js";
+import {
+  validateProductForm,
+  validateProductSearch,
+} from "../validators/productValidator.js";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
 import {
@@ -32,7 +35,7 @@ inventoryRouter.post(
   validateProductForm,
   createProductPost,
 );
-inventoryRouter.get("/products/search", searchProducts);
+inventoryRouter.get("/products/search", validateProductSearch, searchProducts);
 inventoryRouter.get("/products/category", showProductsByCategory);
 inventoryRouter.delete(
   "/products/:id/delete",
@@ -48,7 +51,7 @@ inventoryRouter.patch(
 inventoryRouter.get("/products/:id", getProductPage);
 inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
-  console.log(err);
+  console.log("Error:", err);
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode).render("error", {
