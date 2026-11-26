@@ -77,7 +77,7 @@ const deleteProductById = async (id) => {
 };
 
 async function updateProductById(productData, id) {
-  const { prodPrice, prodQuantity, categoryId } = productData;
+  const { prodPrice, prodQuantity = 5, categoryId = 1 } = productData;
 
   const { rows } = await pool.query(
     `

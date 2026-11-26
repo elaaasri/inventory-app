@@ -51,7 +51,8 @@ const createProductPost = async (req, res) => {
     });
   }
 
-  await addNewProduct(req.body, req.file.buffer);
+  const productData = matchedData(req);
+  await addNewProduct(productData, req.file.buffer);
 
   res.redirect("/products");
 };
@@ -95,13 +96,33 @@ const getEditpage = async (req, res) => {
   }
 
   const updatedProduct = convertProductImage(product);
-
-  res.render("edit-page", { product: updatedProduct, categories });
+  res.render("edit-page", { product: updatedProduct, categories, errors: {} });
 };
 
 const updateProduct = async (req, res) => {
+  // const { id } = matchedData(req);
   const { id } = req.params;
-  const product = await updateProductById(req.body, id);
+  const errors = validationResult(req);
+
+  console.log("result id", id);
+
+  if (!errors.isEmpty()) {
+    const product = await getProductById(id);
+    const updatedProduct = convertProductImage(product);
+    const categories = await getCategories();
+
+    return res.status(400).render("edit-page", {
+      product: updatedProduct,
+      categories,
+      errors: errors.mapped(),
+    });
+  }
+
+  const productData = matchedData(req);
+  console.log("result data", productData);
+  const product = await updateProductById(productData, id);
+
+  console.log("result product", product);
 
   if (!product) {
     throw new AppError("Product Not Found!", 404);

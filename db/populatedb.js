@@ -11,7 +11,7 @@ const SQL = `
 
   CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      product_name VARCHAR(100) NOT NULL,
+      product_name VARCHAR(100) NOT NULL, 
       category_id INTEGER REFERENCES categories(id),
       price INTEGER NOT NULL,
       quantity INTEGER NOT NULL,

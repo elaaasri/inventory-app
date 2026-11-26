@@ -3,6 +3,7 @@ import multer from "multer";
 import {
   validateProductForm,
   validateProductSearch,
+  validateProductEdit,
 } from "../validators/productValidator.js";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
@@ -19,6 +20,8 @@ import {
   verifyAdminPassword,
   notFoundPage,
 } from "../controllers/productsContoller.js";
+
+import { param } from "express-validator";
 
 const inventoryRouter = Router();
 const upload = multer({
@@ -45,7 +48,8 @@ inventoryRouter.delete(
 inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.patch(
   "/products/:id/update",
-  verifyAdminPassword,
+  // verifyAdminPassword,
+  validateProductEdit,
   updateProduct,
 );
 inventoryRouter.get("/products/:id", getProductPage);
@@ -77,8 +81,15 @@ export { inventoryRouter };
 // fix routes that wont show not found page correctly! done
 // handle all db errors done
 // delete/edit access to admin only! done
-// validation and sanitization
+// validation and sanitization forms!
+
+//  1- finish edit
+//  2- hidden input
+//  2- another hiden input in form
+
+// validate all user controlled values!!!
 // style css
 // supports mobile
 // test prod
 // complete recap
+// NODE DEBUGGING !!!!!!!!

@@ -15,6 +15,7 @@
         type="text"
         value="<%= product?.price %>"
       />
+      <span class="error-message"><%= errors?.prodPrice?.msg %></span>
 
       <label for="product-quantity">Quantity:</label>
       <input
@@ -23,6 +24,7 @@
         type="text"
         value="<%= product?.quantity %>"
       />
+      <span class="error-message"><%= errors?.prodQuantity?.msg %></span>
 
       <label for="category-id">Category:</label>
         <select id="category-id" name="categoryId">
@@ -32,6 +34,8 @@
             </option>
         <% }); %>
       </select>
+      <span class="error-message"><%= errors?.categoryId?.msg %></span>
+
 
       <button id="edit-save-button" type="submit">save</button>
       <input id="password-input" name="passwordInput" type="hidden" />
