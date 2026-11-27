@@ -1,12 +1,6 @@
 const removeButton = document.querySelector("#remove-button");
 const editSaveButton = document.querySelector("#edit-save-button");
 
-// here
-// testing the enteredPassword err message if its working
-// check verifyadminpw
-// understand the order in the route
-// showing the err message on AppError
-
 editSaveButton?.addEventListener("click", (e) => {
   const enteredPassword = prompt("Enter Password!");
 

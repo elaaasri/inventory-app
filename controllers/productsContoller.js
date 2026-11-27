@@ -106,9 +106,13 @@ const getEditpage = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  // const { id } = matchedData(req); here
-  const { id } = req.params;
+  const { id } = matchedData(req);
   const errors = validationResult(req);
+  const idError = errors.mapped().id;
+
+  if (idError) {
+    throw new AppError(idError.msg, 400);
+  }
 
   if (!errors.isEmpty()) {
     const product = await getProductById(id);

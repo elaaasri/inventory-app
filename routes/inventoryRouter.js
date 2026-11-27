@@ -22,7 +22,6 @@ import {
   verifyAdminPassword,
   notFoundPage,
 } from "../controllers/productsContoller.js";
-import { param } from "express-validator";
 
 const inventoryRouter = Router();
 const upload = multer({
@@ -51,12 +50,13 @@ inventoryRouter.delete(
 inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.patch(
   "/products/:id/update",
+  validateId,
   validateProductEdit,
   verifyAdminPassword,
   updateProduct,
 );
 inventoryRouter.get("/products/:id", getProductPage);
-// inventoryRouter.use(notFoundPage);
+inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
   console.log("Error:", err);
   const statusCode = err.statusCode || 500;
