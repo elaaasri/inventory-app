@@ -55,7 +55,7 @@ inventoryRouter.patch(
   verifyAdminPassword,
   updateProduct,
 );
-inventoryRouter.get("/products/:id", getProductPage);
+inventoryRouter.get("/products/:id", validateId, getProductPage);
 inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
   console.log("Error:", err);

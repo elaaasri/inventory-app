@@ -24,8 +24,14 @@ const getProductsPage = async (req, res) => {
 };
 
 const getProductPage = async (req, res) => {
-  const { id } = req.params;
+  const { id } = matchedData(req);
   const product = await getProductById(id);
+  const errors = validationResult(req);
+  const idError = errors.mapped().id;
+
+  if (idError) {
+    throw new AppError(idError.msg, 400);
+  }
 
   if (!product) {
     throw new AppError("Product Not Found!", 404);
