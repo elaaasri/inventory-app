@@ -47,7 +47,7 @@ inventoryRouter.delete(
   verifyAdminPassword,
   deleteProduct,
 );
-inventoryRouter.get("/products/:id/edit", getEditpage);
+inventoryRouter.get("/products/:id/edit", validateId, getEditpage);
 inventoryRouter.patch(
   "/products/:id/update",
   validateId,
@@ -85,7 +85,10 @@ export { inventoryRouter };
 // handle all db errors done
 // delete/edit access to admin only! done
 // validation and sanitization forms! done
+
 // validate all user controlled values!
+// add validateId to getEditpage and getProductPage
+
 // style css
 // supports mobile
 // test prod

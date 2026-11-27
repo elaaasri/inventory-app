@@ -92,10 +92,15 @@ const deleteProduct = async (req, res) => {
 };
 
 const getEditpage = async (req, res) => {
-  const { id } = req.params;
-
+  const { id } = matchedData(req);
   const categories = await getCategories();
   const product = await getProductById(id);
+  const errors = validationResult(req);
+  const IdError = errors.mapped().id;
+
+  if (IdError) {
+    throw new AppError(IdError.msg, 400);
+  }
 
   if (!product) {
     throw new AppError("Product Found Page!", 404);
