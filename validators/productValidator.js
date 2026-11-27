@@ -18,7 +18,10 @@ const validateProductEdit = [
     .escape(),
 
   requiredField("categoryId", "Required Product Category!").escape(),
-  // param("id").isInt().withMessage("Invalid product ID!").escape(), here
+
+  requiredField("passwordInput", "Required Password!"),
+
+  // param("id").isInt().withMessage("Invalid product ID!").escape(),
 ];
 
 const validateProductForm = [

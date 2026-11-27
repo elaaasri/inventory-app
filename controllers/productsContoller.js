@@ -100,11 +100,9 @@ const getEditpage = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  // const { id } = matchedData(req);
+  // const { id } = matchedData(req); here
   const { id } = req.params;
   const errors = validationResult(req);
-
-  console.log("result id", id);
 
   if (!errors.isEmpty()) {
     const product = await getProductById(id);
@@ -119,10 +117,7 @@ const updateProduct = async (req, res) => {
   }
 
   const productData = matchedData(req);
-  console.log("result data", productData);
   const product = await updateProductById(productData, id);
-
-  console.log("result product", product);
 
   if (!product) {
     throw new AppError("Product Not Found!", 404);
@@ -135,6 +130,12 @@ const updateProduct = async (req, res) => {
 const verifyAdminPassword = async (req, res, next) => {
   const adminPassword = process.env.ADMIN_PASSWORD;
   const { passwordInput } = req.body;
+  const errors = validationResult(req);
+  const passwordError = errors.mapped().passwordInput;
+
+  if (passwordError) {
+    throw new AppError(passwordError.msg, 400);
+  }
 
   if (adminPassword != passwordInput) {
     throw new AppError("Invalid Password!", 401);

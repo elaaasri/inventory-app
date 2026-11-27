@@ -48,8 +48,8 @@ inventoryRouter.delete(
 inventoryRouter.get("/products/:id/edit", getEditpage);
 inventoryRouter.patch(
   "/products/:id/update",
-  // verifyAdminPassword,
   validateProductEdit,
+  verifyAdminPassword,
   updateProduct,
 );
 inventoryRouter.get("/products/:id", getProductPage);
@@ -83,8 +83,9 @@ export { inventoryRouter };
 // delete/edit access to admin only! done
 // validation and sanitization forms!
 
-//  1- finish edit
-//  2- hidden input
+//  1- finish edit done
+//  2- hidden inputs
+//  server side validation for hidden inputs!
 //  2- another hiden input in form
 
 // validate all user controlled values!!!
