@@ -2,27 +2,39 @@ const removeButton = document.querySelector("#remove-button");
 const editSaveButton = document.querySelector("#edit-save-button");
 
 // here
-// testing the pwInput err message if its working
+// testing the enteredPassword err message if its working
 // check verifyadminpw
 // understand the order in the route
 // showing the err message on AppError
 
 editSaveButton?.addEventListener("click", (e) => {
-  const pwInput = prompt("Enter Password!");
-  if (!pwInput) {
+  const enteredPassword = prompt("Enter Password!");
+
+  if (!enteredPassword) {
     e.preventDefault();
     alert("Required Password!");
     return;
   }
-  e.target.closest("form").querySelector("#password-input").value = pwInput;
+
+  const editForm = document.querySelector("#edit-form");
+  const hiddenPasswordInput = editForm.querySelector("#edit-password-input");
+
+  hiddenPasswordInput.value = enteredPassword;
 });
 
 removeButton?.addEventListener("click", (e) => {
-  const pwInput = prompt("Enter Password!");
-  if (!pwInput) {
+  const enteredPassword = prompt("Enter Password!");
+
+  if (!enteredPassword) {
     e.preventDefault();
     alert("Required Password!");
     return;
   }
-  e.target.closest("form").querySelector("#password-input").value = pwInput;
+
+  const removeForm = document.querySelector("#remove-form");
+  const hiddenPasswordInput = removeForm.querySelector(
+    "#remove-password-input",
+  );
+
+  hiddenPasswordInput.value = enteredPassword;
 });

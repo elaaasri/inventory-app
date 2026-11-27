@@ -4,7 +4,7 @@
   <body>
     <h1>Edit Page</h1>
     
-    <form action="/products/<%= product?.id %>/update?_method=PATCH" method="post">
+    <form id="edit-form" action="/products/<%= product?.id %>/update?_method=PATCH" method="post">
       <img id="product-image" src="<%= product?.image %>" alt="<%= product?.product_name %> image" />
       <span id="product-name" ><%= product?.product_name %></span>
 
@@ -37,7 +37,7 @@
       <span class="error-message"><%= errors?.categoryId?.msg %></span>
 
       <button id="edit-save-button" type="submit">save</button>
-      <input id="password-input" name="passwordInput" type="hidden" />
+      <input id="edit-password-input" name="passwordInput" type="hidden" />
       
     </form>
   </body>

@@ -84,7 +84,7 @@ export { inventoryRouter };
 // validation and sanitization forms!
 
 //  1- finish edit done
-//  2- hidden inputs
+//  2- hidden inputs done
 //  server side validation for hidden inputs!
 //  2- another hiden input in form
 

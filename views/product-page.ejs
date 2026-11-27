@@ -10,11 +10,12 @@
     <img src="<%= product?.image %>" alt="<%= product?.product_name %> image" />
 
     <form
+      id="remove-form"
       action="/products/<%= product?.id %>/delete?_method=DELETE"
       method="post"
     >
       <button type="submit" id="remove-button">remove</button>
-      <input id="password-input" name="passwordInput" type="hidden" />
+      <input id="remove-password-input" name="passwordInput" type="hidden" />
     </form>
 
     <a
