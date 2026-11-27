@@ -75,8 +75,14 @@ const showProductsByCategory = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const { id } = req.params;
+  const { id } = matchedData(req);
   const deletedProductCount = await deleteProductById(id);
+  const errors = validationResult(req);
+  const IdError = errors.mapped().id;
+
+  if (IdError) {
+    throw new AppError(IdError.msg, 400);
+  }
 
   if (deletedProductCount == 0) {
     throw new AppError("Product Not Found!", 404);

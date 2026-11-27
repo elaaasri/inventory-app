@@ -5,6 +5,7 @@ import {
   validateProductSearch,
   validateProductEdit,
   validateAdminPassword,
+  validateId,
 } from "../validators/productValidator.js";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
@@ -21,6 +22,7 @@ import {
   verifyAdminPassword,
   notFoundPage,
 } from "../controllers/productsContoller.js";
+import { param } from "express-validator";
 
 const inventoryRouter = Router();
 const upload = multer({
@@ -41,6 +43,7 @@ inventoryRouter.get("/products/search", validateProductSearch, searchProducts);
 inventoryRouter.get("/products/category", showProductsByCategory);
 inventoryRouter.delete(
   "/products/:id/delete",
+  validateId,
   validateAdminPassword,
   verifyAdminPassword,
   deleteProduct,
@@ -53,7 +56,7 @@ inventoryRouter.patch(
   updateProduct,
 );
 inventoryRouter.get("/products/:id", getProductPage);
-inventoryRouter.use(notFoundPage);
+// inventoryRouter.use(notFoundPage);
 inventoryRouter.use((err, req, res, next) => {
   console.log("Error:", err);
   const statusCode = err.statusCode || 500;
@@ -81,14 +84,8 @@ export { inventoryRouter };
 // fix routes that wont show not found page correctly! done
 // handle all db errors done
 // delete/edit access to admin only! done
-// validation and sanitization forms!
-
-//  1- finish edit done
-//  2- hidden inputs done
-//  server side validation for hidden inputs!
-//  2- another hiden input in form
-
-// validate all user controlled values!!!
+// validation and sanitization forms! done
+// validate all user controlled values!
 // style css
 // supports mobile
 // test prod

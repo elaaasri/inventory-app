@@ -10,6 +10,10 @@ const validateAdminPassword = [
   requiredField("passwordInput", "Required Password!"),
 ];
 
+const validateId = [
+  param("id").isInt({ min: 1 }).withMessage("Invalid product ID!").escape(),
+];
+
 const validateProductEdit = [
   ...validateAdminPassword,
 
@@ -25,7 +29,6 @@ const validateProductEdit = [
 
   requiredField("categoryId", "Required Product Category!").escape(),
 
-  // requiredField("passwordInput", "Required Password!"),
   // param("id").isInt().withMessage("Invalid product ID!").escape(),
 ];
 
@@ -61,4 +64,5 @@ export {
   validateProductSearch,
   validateProductEdit,
   validateAdminPassword,
+  validateId,
 };
