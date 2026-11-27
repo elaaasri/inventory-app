@@ -6,7 +6,13 @@ const requiredField = (fieldName, errorMessage) => {
 
 const validateProductSearch = [query("searchValue").trim().escape()];
 
+const validateAdminPassword = [
+  requiredField("passwordInput", "Required Password!"),
+];
+
 const validateProductEdit = [
+  ...validateAdminPassword,
+
   requiredField("prodPrice", "Required Product Price!")
     .isFloat({ min: 0 })
     .withMessage("Invalid Product Price!")
@@ -19,8 +25,7 @@ const validateProductEdit = [
 
   requiredField("categoryId", "Required Product Category!").escape(),
 
-  requiredField("passwordInput", "Required Password!"),
-
+  // requiredField("passwordInput", "Required Password!"),
   // param("id").isInt().withMessage("Invalid product ID!").escape(),
 ];
 
@@ -51,4 +56,9 @@ const validateProductForm = [
   }),
 ];
 
-export { validateProductForm, validateProductSearch, validateProductEdit };
+export {
+  validateProductForm,
+  validateProductSearch,
+  validateProductEdit,
+  validateAdminPassword,
+};

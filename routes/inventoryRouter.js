@@ -4,6 +4,7 @@ import {
   validateProductForm,
   validateProductSearch,
   validateProductEdit,
+  validateAdminPassword,
 } from "../validators/productValidator.js";
 import { renderIndex } from "../controllers/indexController.js";
 import { getCategoriesPage } from "../controllers/categoriesContoller.js";
@@ -20,8 +21,6 @@ import {
   verifyAdminPassword,
   notFoundPage,
 } from "../controllers/productsContoller.js";
-
-import { param } from "express-validator";
 
 const inventoryRouter = Router();
 const upload = multer({
@@ -42,6 +41,7 @@ inventoryRouter.get("/products/search", validateProductSearch, searchProducts);
 inventoryRouter.get("/products/category", showProductsByCategory);
 inventoryRouter.delete(
   "/products/:id/delete",
+  validateAdminPassword,
   verifyAdminPassword,
   deleteProduct,
 );
